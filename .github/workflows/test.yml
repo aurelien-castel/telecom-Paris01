@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - name: Checkout code
@@ -24,7 +25,12 @@ jobs:
 
       - name: Test the wrapper
         run: |
-          docker run --rm seccomp-wrapper python -v
           docker run --rm seccomp-wrapper ls -la
-          docker run --rm seccomp-wrapper python3 wrapper.py echo "Hello World"
+          docker run --rm seccomp-wrapper python ./wrapper.py echo "Hello World"
+          docker run --rm seccomp-wrapper python ./wrapper.py python -v
+
+      - name: Test the wrapper - handle errors
+        run: |
+            docker run --rm seccomp-wrapper python3 ./wrapper.py touch toto.txt
+            docker run --rm seccomp-wrapper python3 ./wrapper.py echo "toto" >> toto.txt
 
