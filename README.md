@@ -10,5 +10,7 @@ Ce projet est un script Python qui utilise `seccomp` pour interdire l'ouverture 
    ```bash
    pip install seccomp
    ```
-   
-# telecom-Paris
+2. Lancez le script:
+   ```bash
+   python wrapper.py [command]
+   ```
