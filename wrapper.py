@@ -11,7 +11,6 @@ def main():
         sys.exit(1)
 
     filter = seccomp.SyscallFilter(seccomp.ERRNO(seccomp.errno.EPERM))
-    # allow `write`ing to two already-opened files stdout and stderr
     filter.add_rule(
         seccomp.KILL, "write", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno())
     )
