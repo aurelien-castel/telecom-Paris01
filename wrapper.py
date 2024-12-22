@@ -12,9 +12,7 @@ def main():
 
     # Configuration du filtre seccomp
     filter = seccomp.SyscallFilter(seccomp.ERRNO(seccomp.errno.EPERM))
-    filter.add_rule(
-        seccomp.DENY, "write", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno())
-    )
+    filter.add_rule(seccomp.KILL, "write", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno()))
     filter.load()
 
     # Exécution de la commande
