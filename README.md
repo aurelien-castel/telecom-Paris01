@@ -4,8 +4,6 @@ Ce projet est un script Python qui utilise `seccomp` pour interdire l'ouverture 
 
 ## Utilisation
 
-### Exécution directe
-
 1. Installez les dépendances :
    ```bash
    pip install seccomp
