@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-RUN pip install --no-cache-dir seccomp
+RUN pip install seccomp
 
 COPY wrapper.py /app/wrapper.py
 
