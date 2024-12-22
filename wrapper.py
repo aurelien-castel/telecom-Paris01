@@ -11,7 +11,7 @@ def main():
         sys.exit(1)
 
     # Configuration du filtre seccomp
-    ctx = seccomp.SyscallFilter(seccomp.SECOMP_MODE_FILTER, default=seccomp.ALLOW)
+    ctx = seccomp.SyscallFilter(seccomp.ERRNO(seccomp.errno.EPERM))
     ctx.add_rule(seccomp.DENY, seccomp.SYS_open, arg0_match=seccomp.FilterRuleArg(2, seccomp.EQ, 0x2))
     ctx.load()
 
