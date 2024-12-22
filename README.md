@@ -11,4 +11,4 @@ Ce projet est un script Python qui utilise `seccomp` pour interdire l'ouverture 
    pip install seccomp
    ```
    
-# telecom-Paris01
+# telecom-Paris
