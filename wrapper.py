@@ -3,17 +3,7 @@ import subprocess
 try:
     import seccomp
 except ImportError:
-    import pyseccomp as seccomp
-
-def setup_seccomp():
-    # Création d'un contexte seccomp en mode strict
-    ctx = seccomp.Seccomp(seccomp.SECOMP_MODE_FILTER, default=seccomp.ALLOW)
-
-    # Interdire l'appel système `open` pour les fichiers en écriture
-    ctx.add_rule(seccomp.DENY, seccomp.SYS_open, arg0_match=seccomp.FilterRuleArg(2, seccomp.EQ, 0x2))
-
-    # Charger la politique seccomp
-    ctx.load()
+    import pyseccomp as seccomp    
 
 def main():
     if len(sys.argv) < 2:
@@ -21,7 +11,9 @@ def main():
         sys.exit(1)
 
     # Configuration du filtre seccomp
-    setup_seccomp()
+    ctx = seccomp.SyscallFilter(seccomp.SECOMP_MODE_FILTER, default=seccomp.ALLOW)
+    ctx.add_rule(seccomp.DENY, seccomp.SYS_open, arg0_match=seccomp.FilterRuleArg(2, seccomp.EQ, 0x2))
+    ctx.load()
 
     # Exécution de la commande
     command = sys.argv[1:]
