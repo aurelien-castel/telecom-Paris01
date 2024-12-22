@@ -1,0 +1,32 @@
+#### 4. Fichier de CI/CD (`.github/workflows/test.yml`)
+
+```yaml
+name: Test Wrapper
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Build Docker image
+        run: docker build -t seccomp-wrapper .
+
+      - name: Test the wrapper
+        run: |
+          docker run --rm seccomp-wrapper ls -la
+          docker run --rm seccomp-wrapper echo "Hello World"
+
