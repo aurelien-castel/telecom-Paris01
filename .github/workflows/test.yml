@@ -24,6 +24,7 @@ jobs:
 
       - name: Test the wrapper
         run: |
+          docker run --rm seccomp-wrapper python -v
           docker run --rm seccomp-wrapper ls -la
           docker run --rm seccomp-wrapper echo "Hello World"
 
