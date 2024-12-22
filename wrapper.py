@@ -13,10 +13,10 @@ def main():
     filter = seccomp.SyscallFilter(seccomp.ERRNO(seccomp.errno.EPERM))
     # allow `write`ing to two already-opened files stdout and stderr
     filter.add_rule(
-        seccomp.ALLOW, "write", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno())
+        seccomp.KILL, "write", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno())
     )
     filter.add_rule(
-        seccomp.ALLOW, "write", seccomp.Arg(0, seccomp.EQ, sys.stderr.fileno())
+        seccomp.ALLOW, "read", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno())
     )
 
     # Exécution de la commande
