@@ -10,13 +10,14 @@ def main():
         print("Usage: python wrapper.py <commande> [args...]")
         sys.exit(1)
 
-    # Configuration du filtre seccomp
     filter = seccomp.SyscallFilter(seccomp.ERRNO(seccomp.errno.EPERM))
-    filter.add_rule(seccomp.KILL, seccomp.SYS_open, arg0_match=seccomp.FilterRuleArg(2, seccomp.EQ, 0x2))
-    filter.add_rule(seccomp.ALLOW, seccomp.SYS_execve)
-    filter.add_rule(seccomp.ALLOW, seccomp.SYS_write)
-    filter.add_rule(seccomp.LOG, seccomp.SYS_open)
-    filter.load()
+    # allow `write`ing to two already-opened files stdout and stderr
+    filter.add_rule(
+        seccomp.ALLOW, "write", seccomp.Arg(0, seccomp.EQ, sys.stdout.fileno())
+    )
+    filter.add_rule(
+        seccomp.ALLOW, "write", seccomp.Arg(0, seccomp.EQ, sys.stderr.fileno())
+    )
 
     # Exécution de la commande
     command = sys.argv[1:]
