@@ -1,6 +1,9 @@
 import sys
 import subprocess
-import seccomp
+try:
+    import seccomp
+except ImportError:
+    import pyseccomp as seccomp
 
 def setup_seccomp():
     # Création d'un contexte seccomp en mode strict
